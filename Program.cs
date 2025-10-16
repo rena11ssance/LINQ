@@ -27,12 +27,7 @@ namespace LINQ
             Console.WriteLine("                     Список доступных компьютеров и их характеристики");
             Console.WriteLine("================================================================================================================\n");
 
-            foreach (PersonalComputers computers in personalComputers)
-            {
-                Console.WriteLine($"ID: {computers.Id} | Бренд: {computers.computerBrand} | Процессор: {computers.processorType} | Частота: {computers.operatingFrequency}MHz");
-                Console.WriteLine($"     ОЗУ: {computers.amountOfRandomAccessMemory}GB | Жёсткий диск: {computers.hardDriveCapacity}GB | Видеокарта: {computers.videoCardMemoryCapacity}GB | Стоимость: {computers.computerCost} | В наличии: {computers.quantityInStock} шт.");
-                Console.WriteLine("----------------------------------------------------------------------------------------------------------------");
-            }
+            Print.PrintOutput(personalComputers);
             #endregion
 
             #region Отбор по процессору
@@ -48,12 +43,7 @@ namespace LINQ
             Console.WriteLine($"\nСписок ПК с процессором {firstInput}:");
             Console.WriteLine("-------------------------------------------");
 
-            foreach (PersonalComputers processor in separateProcessor)
-            {
-                Console.WriteLine($"ID: {processor.Id} | Бренд: {processor.computerBrand} | Процессор: {processor.processorType} | Частота: {processor.operatingFrequency}MHz");
-                Console.WriteLine($"     ОЗУ: {processor.amountOfRandomAccessMemory}GB | Жёсткий диск: {processor.hardDriveCapacity}GB | Видеокарта: {processor.videoCardMemoryCapacity}GB | Стоимость: {processor.computerCost} | В наличии: {processor.quantityInStock} шт.");
-                Console.WriteLine("-------------------------------------------");
-            }
+            Print.PrintOutput(separateProcessor);
             #endregion
 
             #region Отбор по объему ОЗУ
@@ -70,12 +60,7 @@ namespace LINQ
             Console.WriteLine($"\nСписок ПК с объемом ОЗУ больше {secondInput} GB:");
             Console.WriteLine("-------------------------------------------");
 
-            foreach (PersonalComputers randomAccessMemory in randomAccessMemorySeparate)
-            {
-                Console.WriteLine($"ID: {randomAccessMemory.Id} | Бренд: {randomAccessMemory.computerBrand} | Процессор: {randomAccessMemory.processorType} | Частота: {randomAccessMemory.operatingFrequency}MHz");
-                Console.WriteLine($"     ОЗУ: {randomAccessMemory.amountOfRandomAccessMemory}GB | Жёсткий диск: {randomAccessMemory.hardDriveCapacity}GB | Видеокарта: {randomAccessMemory.videoCardMemoryCapacity}GB | Стоимость: {randomAccessMemory.computerCost} | В наличии: {randomAccessMemory.quantityInStock} шт.");
-                Console.WriteLine("-------------------------------------------");
-            }
+            Print.PrintOutput(randomAccessMemorySeparate);
             #endregion
 
             Console.WriteLine("\n===========================================");
@@ -92,32 +77,14 @@ namespace LINQ
             List<PersonalComputers> CostSort = personalComputers
                 .OrderBy(d => d.computerCost).ToList();
 
-            foreach (PersonalComputers cost in CostSort)
-            {
-                Console.WriteLine($"ID: {cost.Id} | Бренд: {cost.computerBrand} | Процессор: {cost.processorType} | Частота: {cost.operatingFrequency}MHz");
-                Console.WriteLine($"     ОЗУ: {cost.amountOfRandomAccessMemory}GB | Жёсткий диск: {cost.hardDriveCapacity}GB | Видеокарта: {cost.videoCardMemoryCapacity}GB | Стоимость: {cost.computerCost} | В наличии: {cost.quantityInStock} шт.");
-                Console.WriteLine("-------------------------------------------");
-            }
+            Print.PrintOutput(CostSort);
             #endregion
 
             #region Группировка по типу процессора
             IEnumerable<IGrouping<string, PersonalComputers>> processorGroup = personalComputers
                 .GroupBy(d => d.processorType);
 
-            foreach (IGrouping<string, PersonalComputers> group in processorGroup)
-            {
-                Console.WriteLine($"\n Процессор: {group.Key}");
-                Console.WriteLine("-------------------------------------------");
-
-                foreach (PersonalComputers computer in group)
-                {
-                    Console.WriteLine($"ID: {computer.Id} | Бренд: {computer.computerBrand} | Частота: {computer.operatingFrequency}MHz");
-                    Console.WriteLine($"     ОЗУ: {computer.amountOfRandomAccessMemory}GB | Жёсткий диск: {computer.hardDriveCapacity}GB | Стоимость: {computer.computerCost}₽");
-                    Console.WriteLine("-------------------------------------------");
-                }
-
-                Console.WriteLine($"Всего компьютеров с процессором {group.Key}: {group.Count()}");
-            }
+            Print.PrintGroup(processorGroup);
             #endregion
 
             Console.WriteLine("\n===========================================");
@@ -134,17 +101,7 @@ namespace LINQ
                 .OrderBy(d => d.computerCost)
                 .FirstOrDefault();
 
-            Console.WriteLine("\nСамый дорогой ПК: ");
-            Console.WriteLine("-------------------------------------------");
-            Console.WriteLine($"ID: {mostExpensive.Id} | Бренд: {mostExpensive.computerBrand} | Частота: {mostExpensive.operatingFrequency}MHz");
-            Console.WriteLine($"     ОЗУ: {mostExpensive.amountOfRandomAccessMemory}GB | Жёсткий диск: {mostExpensive.hardDriveCapacity}GB | Стоимость: {mostExpensive.computerCost}");
-            Console.WriteLine("-------------------------------------------");
-
-            Console.WriteLine("\n Самый бюджетный ПК: ");
-            Console.WriteLine("-------------------------------------------");
-            Console.WriteLine($"ID: {mostBudget.Id} | Бренд: {mostBudget.computerBrand} | Частота: {mostBudget.operatingFrequency}MHz");
-            Console.WriteLine($"     ОЗУ: {mostBudget.amountOfRandomAccessMemory}GB | Жёсткий диск: {mostBudget.hardDriveCapacity}GB | Стоимость: {mostBudget.computerCost}");
-            Console.WriteLine("-------------------------------------------");
+            Print.SimpleOutput(mostExpensive, mostBudget);
             #endregion
 
             Console.WriteLine("\n===========================================");
@@ -165,15 +122,11 @@ namespace LINQ
             else
             {
                 Console.WriteLine("\nДа, есть. Вот список ПК, количество которых превышает 30 единиц: \n");
-                foreach (PersonalComputers moreThanThirty in moreThanThirtyStock)
-                {
-                    Console.WriteLine($"ID: {moreThanThirty.Id} | Бренд: {moreThanThirty.computerBrand} | Процессор: {moreThanThirty.processorType} | Частота: {moreThanThirty.operatingFrequency}MHz");
-                    Console.WriteLine($"     ОЗУ: {moreThanThirty.amountOfRandomAccessMemory}GB | Жёсткий диск: {moreThanThirty.hardDriveCapacity}GB | Видеокарта: {moreThanThirty.videoCardMemoryCapacity}GB | Стоимость: {moreThanThirty.computerCost} | В наличии: {moreThanThirty.quantityInStock} шт.");
-                    Console.WriteLine("-------------------------------------------");
-                }
+                Print.PrintOutput(moreThanThirtyStock);
             }
             #endregion
 
+            Console.ReadKey();
         }
     }
 }
