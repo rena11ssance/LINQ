@@ -138,7 +138,8 @@ namespace LINQ
 
             string firstInput = Console.ReadLine();
             List<PersonalComputers> separateProcessor = personalComputers
-                .Where(d => d.processorType == firstInput).ToList();
+                .Where(d => d.processorType == firstInput)
+                .ToList();
 
             Console.WriteLine($"\nСписок ПК с процессором {firstInput}:");
             Console.WriteLine("-------------------------------------------");
@@ -155,7 +156,8 @@ namespace LINQ
 
             int secondInput = Convert.ToInt32(Console.ReadLine());
             List<PersonalComputers> randomAccessMemorySeparate = personalComputers
-                .Where(d => d.amountOfRandomAccessMemory >= secondInput).ToList();
+                .Where(d => d.amountOfRandomAccessMemory >= secondInput)
+                .ToList();
 
             Console.WriteLine($"\nСписок ПК с объемом ОЗУ больше {secondInput} GB:");
             Console.WriteLine("-------------------------------------------");
@@ -175,7 +177,8 @@ namespace LINQ
             Console.WriteLine("===========================================");
 
             List<PersonalComputers> CostSort = personalComputers
-                .OrderBy(d => d.computerCost).ToList();
+                .OrderBy(d => d.computerCost)
+                .ToList();
 
             Print.PrintOutput(CostSort);
             #endregion
