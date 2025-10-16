@@ -65,7 +65,7 @@ namespace LINQ
 
             int secondInput = Convert.ToInt32(Console.ReadLine());
             List<PersonalComputers> randomAccessMemorySeparate = personalComputers
-                .Where(d => d.amountOfRandomAccessMemory > secondInput).ToList();
+                .Where(d => d.amountOfRandomAccessMemory >= secondInput).ToList();
 
             Console.WriteLine($"\nСписок ПК с объемом ОЗУ больше {secondInput} GB:");
             Console.WriteLine("-------------------------------------------");
@@ -157,7 +157,7 @@ namespace LINQ
                 .Where(d => d.quantityInStock >= 30)
                 .ToList();
 
-            if (moreThanThirtyStock == null)
+            if (moreThanThirtyStock.Count == 0)
             {
                 Console.WriteLine("\nНет, отсутствуют ПК в наличии более 30 штук.");
             }
